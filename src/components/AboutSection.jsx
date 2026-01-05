@@ -21,16 +21,34 @@ const AboutSection = () => {
           
           <motion.div variants={fadeIn("right", "tween", 0.2, 1)} className="grid gap-6 order-2 md:order-1">
             {[
-              { icon: FaCode, title: "My Journey", text: "Started with C/C++ in university, fell in love with Web Development. Now mastering the MERN stack to build production-ready apps.", color: "purple" },
-              { icon: FaGraduationCap, title: "Education", text: "BSc in CSE @ Daffodil International University. Active participant in coding contests & tech clubs.", color: "pink" },
-              { icon: FaGamepad, title: "Beyond Code", text: "When not debugging, I enjoy gaming, exploring new tech trends, and traveling. I believe in continuous learning.", color: "blue" },
+              { 
+                icon: FaCode, 
+                title: "My Journey", 
+                text: "Started with C/C++ in university, fell in love with Web Development. Now mastering the MERN stack to build production-ready apps.", 
+                colorClass: "border-purple-500/20", 
+                iconClass: "bg-purple-500/20 text-purple-400" 
+              },
+              { 
+                icon: FaGraduationCap, 
+                title: "Education", 
+                text: "BSc in CSE @ Daffodil International University. Active participant in coding contests & tech clubs.", 
+                colorClass: "border-pink-500/20", 
+                iconClass: "bg-pink-500/20 text-pink-400" 
+              },
+              { 
+                icon: FaGamepad, 
+                title: "Beyond Code", 
+                text: "When not debugging, I enjoy gaming, exploring new tech trends, and traveling. I believe in continuous learning.", 
+                colorClass: "border-blue-500/20", 
+                iconClass: "bg-blue-500/20 text-blue-400" 
+              },
             ].map((item, index) => (
               <motion.div 
                 key={index}
                 whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)" }}
-                className={`glass p-6 rounded-2xl border border-${item.color}-500/20 flex items-start gap-4 hover:bg-white/5 transition-all group`}
+                className={`glass p-6 rounded-2xl border ${item.colorClass} flex items-start gap-4 hover:bg-white/5 transition-all group`}
               >
-                <div className={`w-12 h-12 rounded-lg bg-${item.color}-500/20 flex items-center justify-center text-${item.color}-400 shrink-0 group-hover:scale-110 transition-transform`}>
+                <div className={`w-12 h-12 rounded-lg ${item.iconClass} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
                   <item.icon className="text-xl" />
                 </div>
                 <div>

@@ -2,6 +2,15 @@
 
 @plugin "tailwindcss-animate";
 
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 @theme {
   --font-sans: var(--font-poppins);
   
