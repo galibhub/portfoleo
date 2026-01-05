@@ -2,8 +2,9 @@
 
 A high-performance, cinematic personal portfolio website built with **Next.js (App Router)**, **Tailwind CSS**, and **Framer Motion**. It features premium animations, a glassmorphism design system, and a fully functional contact form powered by EmailJS.
 
-![Portfolio Preview](./public/assets/images/preview.png)
-*(Note: Add a screenshot of your portfolio to public/assets/images/preview.png if available)*
+**🔗 Live Demo:** [https://protfolio-hi9pqt0dl-ibrahim-ahmed-galibs-projects.vercel.app](https://protfolio-hi9pqt0dl-ibrahim-ahmed-galibs-projects.vercel.app)
+
+![Portfolio Preview](public/assets/images/preview.png)
 
 ## ✨ Key Features
 
