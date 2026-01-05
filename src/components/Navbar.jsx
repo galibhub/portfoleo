@@ -1,13 +1,35 @@
 "use client";
+import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaCode, FaEnvelope, FaFolderOpen, FaHome, FaUser } from "react-icons/fa";
+import { navVariants } from "../utils/animations";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  const navItems = [
+    { name: "Home", path: "/", icon: FaHome },
+    { name: "About", path: "/about", icon: FaUser },
+    { name: "Skills", path: "/skills", icon: FaCode },
+    { name: "Projects", path: "/projects", icon: FaFolderOpen },
+    { name: "Contact", path: "/contact", icon: FaEnvelope },
+  ];
+
+  const isActive = (path) => {
+    if (path === "/" && pathname !== "/") return false;
+    return pathname === path || pathname.startsWith(`${path}/`);
+  };
 
   return (
-    <nav className="fixed w-full z-50 top-0 start-0 glass-nav transition-all duration-300">
+    <motion.nav 
+      variants={navVariants}
+      initial="hidden"
+      animate="show"
+      className="fixed w-full z-50 top-0 start-0 glass-nav transition-all duration-300"
+    >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse group">
           <span className="self-center text-2xl font-bold whitespace-nowrap text-white">
@@ -16,12 +38,12 @@ const Navbar = () => {
         </Link>
         
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <a
-            href="#contact"
-            className="hidden md:inline-block text-white bg-white/10 hover:bg-white/20 focus:ring-4 focus:outline-none focus:ring-purple-900 font-medium rounded-full text-sm px-6 py-2 text-center transition-all border border-white/10"
+          <Link
+            href="/contact"
+            className="hidden md:inline-block text-white bg-white/10 hover:bg-white/20 focus:scale-105 active:scale-95 font-medium rounded-full text-sm px-6 py-2 text-center transition-all border border-white/10 hover:shadow-[0_0_15px_rgba(168,85,247,0.3)]"
           >
             Hire Me
-          </a>
+          </Link>
           <button
             onClick={() => setIsOpen(!isOpen)}
             type="button"
@@ -41,29 +63,40 @@ const Navbar = () => {
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-            <li>
-              <Link
-                href="#home"
-                className="block py-2 px-3 text-white bg-purple-700 rounded md:bg-transparent md:text-purple-400 md:p-0"
-                aria-current="page"
-              >
-                Home
-              </Link>
-            </li>
-            {["About", "Skills", "Projects", "Contact"].map((item) => (
-              <li key={item}>
-                <Link
-                  href={`#${item.toLowerCase()}`}
-                  className="block py-2 px-3 text-gray-300 hover:text-white md:p-0 transition-colors"
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
+            {navItems.map((item) => {
+              const active = isActive(item.path);
+              return (
+                <li key={item.name} className="relative w-fit">
+                  <Link
+                    href={item.path}
+                    className={`flex items-center gap-2 py-2 px-3 rounded md:p-0 transition-colors duration-300 relative z-10 ${
+                      active
+                        ? "text-white"
+                        : "text-gray-400 hover:text-white"
+                    }`}
+                  >
+                     <motion.span
+                        animate={active ? { scale: 1.1, color: "#fff" } : { scale: 1, color: "#9ca3af" }}
+                        className={`text-lg ${active ? "text-purple-400" : ""}`}
+                     >
+                       <item.icon />
+                     </motion.span>
+                    {item.name}
+                  </Link>
+                  {active && (
+                    <motion.div
+                      layoutId="navbar-underline"
+                      className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                      transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
