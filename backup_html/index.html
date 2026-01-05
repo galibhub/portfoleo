@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ibrahim Ahmed Galib | MERN Stack Developer</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#050505',
+                        card: 'rgba(255, 255, 255, 0.03)',
+                        primary: '#a855f7', // Purple
+                        secondary: '#ec4899', // Pink
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a855f7;
+            border-radius: 5px;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Gradients */
+        .text-gradient {
+            background: linear-gradient(to right, #c084fc, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(to right, #9333ea, #db2777);
+        }
+
+        /* Grid Background Pattern */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        /* Skill Dots */
+        .skill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+        .dot-filled { background-color: #a855f7; box-shadow: 0 0 8px #a855f7; }
+        .dot-empty { background-color: #333; }
+
+        /* Modal Styles */
+        .modal {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .modal:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-grid relative selection:bg-purple-500 selection:text-white">
+
+    <div class="fixed top-0 left-0 w-[500px] h-[500px] bg-purple-900/20 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 -z-10"></div>
+    <div class="fixed bottom-0 right-0 w-[500px] h-[500px] bg-pink-900/20 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3 -z-10"></div>
+
+    <nav class="fixed w-full z-50 top-0 start-0 glass-nav transition-all duration-300">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse group">
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-white">Galib<span class="text-purple-500">&lt;/&gt;</span></span>
+            </a>
+            
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <a href="#contact" class="hidden md:inline-block text-white bg-white/10 hover:bg-white/20 focus:ring-4 focus:outline-none focus:ring-purple-900 font-medium rounded-full text-sm px-6 py-2 text-center transition-all border border-white/10">
+                    Hire Me
+                </a>
+                <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-800 focus:outline-none" aria-controls="navbar-sticky" aria-expanded="false" onclick="document.getElementById('navbar-sticky').classList.toggle('hidden')">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+                    <li><a href="#home" class="block py-2 px-3 text-white bg-purple-700 rounded md:bg-transparent md:text-purple-400 md:p-0" aria-current="page">Home</a></li>
+                    <li><a href="#about" class="block py-2 px-3 text-gray-300 hover:text-white md:p-0 transition-colors">About</a></li>
+                    <li><a href="#skills" class="block py-2 px-3 text-gray-300 hover:text-white md:p-0 transition-colors">Skills</a></li>
+                    <li><a href="#projects" class="block py-2 px-3 text-gray-300 hover:text-white md:p-0 transition-colors">Projects</a></li>
+                    <li><a href="#contact" class="block py-2 px-3 text-gray-300 hover:text-white md:p-0 transition-colors">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            
+            <div class="text-center md:text-left z-10">
+                <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-purple-300 uppercase bg-purple-900/30 rounded-full border border-purple-500/30">
+                    Open to Work
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+                    Hi, I’m <br> <span class="text-gradient">Ibrahim Ahmed Galib</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-gray-200">
+                    MERN Stack Web Developer
+                </h2>
+                <p class="text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                    Based in <span class="text-white">Dhaka, Bangladesh</span>. I build modern, scalable, and production-ready web applications.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
+                    <a href="#" class="btn-gradient text-white font-semibold py-3 px-8 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.4)] transition-all hover:scale-105 flex items-center gap-2">
+                        Download Resume <i class="fas fa-download"></i>
+                    </a>
+                    
+                    <div class="flex gap-4 mt-4 sm:mt-0">
+                        <a href="https://github.com/galibhub" target="_blank" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-500/10 transition-all">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ibrahim-ahmed-galib/" target="_blank" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:text-white hover:border-blue-500 hover:bg-blue-500/10 transition-all">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:ibrahimgalib00@gmail.com" class="w-10 h-10 rounded-full border border-gray-600 flex items-center justify-center text-gray-400 hover:text-white hover:border-pink-500 hover:bg-pink-500/10 transition-all">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative flex justify-center z-10">
+                <div class="relative w-72 h-72 md:w-96 md:h-96">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full blur-2xl opacity-40 animate-pulse-slow"></div>
+                    <div class="w-full h-full rounded-full border-2 border-white/10 overflow-hidden relative z-10 glass p-2">
+                        <img src="./assets/images/profile.jpg" alt="Ibrahim Ahmed Galib" class="w-full h-full object-cover rounded-full shadow-2xl">
+                    </div>
+
+                    <div class="absolute -top-4 -right-4 bg-[#0f0c29] border border-purple-500/30 p-3 rounded-full shadow-lg shadow-purple-500/20 animate-float z-20">
+                        <i class="fab fa-react text-2xl text-cyan-400"></i>
+                    </div>
+                    <div class="absolute top-1/2 -left-8 bg-[#0f0c29] border border-green-500/30 p-3 rounded-full shadow-lg shadow-green-500/20 animate-float-delayed z-20">
+                        <i class="fab fa-node text-2xl text-green-500"></i>
+                    </div>
+                    <div class="absolute bottom-4 -right-2 bg-[#0f0c29] border border-yellow-500/30 p-3 rounded-full shadow-lg shadow-yellow-500/20 animate-float z-20">
+                        <i class="fab fa-js text-2xl text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">About Me</h2>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                
+                <div class="grid gap-6 order-2 md:order-1">
+                    <div class="glass p-6 rounded-2xl border border-purple-500/20 flex items-start gap-4 hover:bg-white/5 transition-all group">
+                        <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-code text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">My Journey</h3>
+                            <p class="text-gray-400 text-sm">Started with C/C++ in university, fell in love with Web Development. Now mastering the MERN stack to build production-ready apps.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass p-6 rounded-2xl border border-pink-500/20 flex items-start gap-4 hover:bg-white/5 transition-all group">
+                        <div class="w-12 h-12 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400 shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-graduation-cap text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Education</h3>
+                            <p class="text-gray-200 text-sm font-medium">BSc in Computer Science & Engineering</p>
+                            <p class="text-gray-400 text-xs">Daffodil International University (Running)</p>
+                            <p class="text-gray-500 text-xs mt-1">Foundational knowledge in DSA, OOP (Java), and Database Systems.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass p-6 rounded-2xl border border-blue-500/20 flex items-start gap-4 hover:bg-white/5 transition-all group">
+                        <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-gamepad text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Beyond Code</h3>
+                            <p class="text-gray-400 text-sm">When not debugging, I enjoy gaming, exploring new tech trends, and traveling. I believe in continuous learning and creative problem solving.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-1 md:order-2 space-y-6">
+                    <h3 class="text-2xl font-bold text-purple-400">Passionate MERN Developer</h3>
+                    
+                    <p class="text-gray-300 leading-relaxed text-lg">
+                        I am a <strong class="text-white">MERN Stack Web Developer</strong> based in Dhaka, Bangladesh. My passion lies in building modern, scalable, and responsive web applications.
+                    </p>
+                    
+                    <p class="text-gray-300 leading-relaxed text-lg">
+                        I specialize in creating role-based dashboards, managing REST APIs, and implementing secure authentication workflows. I enjoy working on backend architecture and am currently exploring AI integration. My goal is to build software that solves real-world problems.
+                    </p>
+                    
+                    <div class="pt-4">
+                        <h4 class="text-white font-semibold mb-3">Key Achievements</h4>
+                        <div class="glass p-4 rounded-xl border-l-4 border-purple-500">
+                            <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
+                                <li>Developed 3+ Full Stack MERN Applications.</li>
+                                <li>Implemented Secure Payment Gateway (Stripe) & JWT Auth.</li>
+                                <li>Certified in Java & OOP by IBM.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 bg-black/20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">My Skills</h2>
+
+            <div class="grid md:grid-cols-2 gap-x-20 gap-y-12 max-w-5xl mx-auto">
+                <div class="space-y-6">
+                    <h3 class="text-xl font-semibold text-purple-400 border-b border-gray-800 pb-2 mb-6">Frontend Development</h3>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-3 w-36"><i class="fab fa-react text-cyan-400 text-xl"></i><span class="font-medium">React.js</span></div><div class="flex"><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-empty"></div></div></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-3 w-36"><i class="fab fa-js text-yellow-400 text-xl"></i><span class="font-medium">JavaScript</span></div><div class="flex"><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-empty"></div><div class="skill-dot dot-empty"></div></div></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-3 w-36"><i class="fas fa-wind text-cyan-300 text-xl"></i><span class="font-medium">Tailwind CSS</span></div><div class="flex"><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-empty"></div></div></div>
+                </div>
+
+                <div class="space-y-6">
+                    <h3 class="text-xl font-semibold text-pink-400 border-b border-gray-800 pb-2 mb-6">Backend & Tools</h3>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-3 w-36"><i class="fab fa-node text-green-500 text-xl"></i><span class="font-medium">Node.js</span></div><div class="flex"><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-empty"></div><div class="skill-dot dot-empty"></div><div class="skill-dot dot-empty"></div></div></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-3 w-36"><i class="fas fa-database text-green-400 text-xl"></i><span class="font-medium">MongoDB</span></div><div class="flex"><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-empty"></div><div class="skill-dot dot-empty"></div><div class="skill-dot dot-empty"></div></div></div>
+                    <div class="flex items-center justify-between"><div class="flex items-center gap-3 w-36"><i class="fab fa-git-alt text-red-500 text-xl"></i><span class="font-medium">Git/GitHub</span></div><div class="flex"><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-filled"></div><div class="skill-dot dot-empty"></div><div class="skill-dot dot-empty"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">My Projects</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="glass rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300 flex flex-col">
+                    <div class="h-48 overflow-hidden relative bg-gray-800">
+                        <img src="./assets/images/etutor.png" alt="E-Tutor" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                        <div class="absolute top-4 right-4 bg-black/60 backdrop-blur text-xs font-bold px-3 py-1 rounded-full border border-white/20">MERN</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <h3 class="text-xl font-bold mb-2">E-Tutor Platform</h3>
+                        <button onclick="openModal('modal-1')" class="mt-auto w-full text-center text-sm bg-gradient-to-r from-purple-600 to-pink-600 py-3 rounded-lg shadow-lg shadow-purple-500/20 hover:opacity-90 transition-opacity font-semibold">
+                            View Details <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300 flex flex-col">
+                    <div class="h-48 overflow-hidden relative bg-gray-800">
+                        <img src="./assets/images/export_import.png" alt="Export Import" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                        <div class="absolute top-4 right-4 bg-black/60 backdrop-blur text-xs font-bold px-3 py-1 rounded-full border border-white/20">MERN</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <h3 class="text-xl font-bold mb-2">Export–Import Hub</h3>
+                        <button onclick="openModal('modal-2')" class="mt-auto w-full text-center text-sm bg-gradient-to-r from-purple-600 to-pink-600 py-3 rounded-lg shadow-lg shadow-purple-500/20 hover:opacity-90 transition-opacity font-semibold">
+                            View Details <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] transition-all duration-300 flex flex-col">
+                    <div class="h-48 overflow-hidden relative bg-gray-800">
+                        <img src="./assets/images/hero.png" alt="Hero App" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-80">
+                        <div class="absolute top-4 right-4 bg-black/60 backdrop-blur text-xs font-bold px-3 py-1 rounded-full border border-white/20">JS Core</div>
+                    </div>
+                    <div class="p-6 flex flex-col flex-1">
+                        <h3 class="text-xl font-bold mb-2">Hero App</h3>
+                        <button onclick="openModal('modal-3')" class="mt-auto w-full text-center text-sm bg-gradient-to-r from-purple-600 to-pink-600 py-3 rounded-lg shadow-lg shadow-purple-500/20 hover:opacity-90 transition-opacity font-semibold">
+                            View Details <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-1" class="modal hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="glass max-w-2xl w-full rounded-2xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button onclick="closeModal('modal-1')" class="absolute top-4 right-4 text-white hover:text-red-500 text-2xl"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-purple-400 mb-4">E-Tutor Platform</h3>
+            <img src="./assets/images/etutor.png" class="w-full h-48 object-cover rounded-lg mb-6 opacity-80">
+            
+            <div class="space-y-4 text-gray-300 text-sm">
+                <p><strong class="text-white">Tech Stack:</strong> React, Tailwind, Node.js, Express, MongoDB, Firebase Auth.</p>
+                <p><strong class="text-white">Description:</strong> A tuition management platform allowing students to find tutors and tutors to manage classes.</p>
+                <p><strong class="text-white">Challenges:</strong> Implementing role-based dashboard routing (Admin vs Tutor vs Student) securely was complex.</p>
+                <p><strong class="text-white">Future Plans:</strong> Integrating a real-time chat system and Zoom API for live classes.</p>
+            </div>
+
+            <div class="flex gap-4 mt-8">
+                <a href="https://etutionbd.netlify.app" target="_blank" class="flex-1 text-center py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-white font-semibold">Live Link</a>
+                <a href="https://github.com/galibhub/e-tuitor-client" target="_blank" class="flex-1 text-center py-2 border border-gray-600 rounded-lg text-white hover:bg-white/10">GitHub Client</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-2" class="modal hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="glass max-w-2xl w-full rounded-2xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button onclick="closeModal('modal-2')" class="absolute top-4 right-4 text-white hover:text-red-500 text-2xl"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-pink-400 mb-4">Export–Import Hub</h3>
+            <img src="./assets/images/export_import.png" class="w-full h-48 object-cover rounded-lg mb-6 opacity-80">
+            
+            <div class="space-y-4 text-gray-300 text-sm">
+                <p><strong class="text-white">Tech Stack:</strong> MERN Stack, Firebase, Tailwind CSS.</p>
+                <p><strong class="text-white">Description:</strong> Dashboard for managing export/import logic, client lists, and shipment tracking.</p>
+                <p><strong class="text-white">Challenges:</strong> Managing complex state for inventory data updates in real-time.</p>
+                <p><strong class="text-white">Future Plans:</strong> Add data visualization charts for monthly profit/loss reports.</p>
+            </div>
+
+            <div class="flex gap-4 mt-8">
+                <a href="https://export-import-hub.netlify.app" target="_blank" class="flex-1 text-center py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-white font-semibold">Live Link</a>
+                <a href="https://github.com/galibhub/export-import-client" target="_blank" class="flex-1 text-center py-2 border border-gray-600 rounded-lg text-white hover:bg-white/10">GitHub Client</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-3" class="modal hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="glass max-w-2xl w-full rounded-2xl p-8 relative overflow-y-auto max-h-[90vh]">
+            <button onclick="closeModal('modal-3')" class="absolute top-4 right-4 text-white hover:text-red-500 text-2xl"><i class="fas fa-times"></i></button>
+            <h3 class="text-2xl font-bold text-cyan-400 mb-4">Hero App</h3>
+            <img src="./assets/images/hero.png" class="w-full h-48 object-cover rounded-lg mb-6 opacity-80">
+            
+           <div class="space-y-4 text-gray-300 text-sm">
+    <p><strong class="text-white">Tech Stack:</strong> HTML5, CSS3, Vanilla JavaScript (ES6+).</p>
+    <p><strong class="text-white">Description:</strong> A dynamic interactive application demonstrating core DOM manipulation, event delegation, and responsive UI logic without frameworks.</p>
+    <p><strong class="text-white">Challenges:</strong> Implementing complex animations and managing state logic purely with Vanilla JS while maintaining high performance.</p>
+    <p><strong class="text-white">Future Plans:</strong> Migrating the codebase to <strong>React.js</strong> and integrating <strong>AI/ML models</strong> to introduce dynamic content generation and smarter user interactions.</p>
+</div>
+
+            <div class="flex gap-4 mt-8">
+                <a href="https://hero-app-galib.netlify.app" target="_blank" class="flex-1 text-center py-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-white font-semibold">Live Link</a>
+                <a href="https://github.com/galibhub/hero-app" target="_blank" class="flex-1 text-center py-2 border border-gray-600 rounded-lg text-white hover:bg-white/10">GitHub Repo</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">Contact</h2>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-bold text-white">Get in Touch</h3>
+                    <p class="text-gray-400">Feel free to reach out for collaborations or just a friendly hello!</p>
+                    
+                    <div class="glass p-6 rounded-xl border border-purple-500/20 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center text-purple-400"><i class="fas fa-envelope text-xl"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-400">Email</p>
+                            <p class="text-white font-medium">ibrahimgalib00@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="glass p-6 rounded-xl border border-purple-500/20 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-600/20 rounded-full flex items-center justify-center text-blue-400"><i class="fas fa-phone text-xl"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-400">Phone</p>
+                            <p class="text-white font-medium">+8801776324437</p>
+                        </div>
+                    </div>
+
+                    <div class="glass p-6 rounded-xl border border-purple-500/20 flex items-center gap-4">
+                        <div class="w-12 h-12 bg-green-600/20 rounded-full flex items-center justify-center text-green-400"><i class="fab fa-whatsapp text-xl"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-400">WhatsApp</p>
+                            <p class="text-white font-medium">+8801776324437</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 md:p-12 rounded-2xl border border-white/10 shadow-2xl relative overflow-hidden">
+                    <form class="space-y-6 relative z-10" action="mailto:ibrahimgalib00@gmail.com" method="post" enctype="text/plain">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-300">Name</label>
+                            <input type="text" class="w-full bg-black/30 border border-gray-700 text-white text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block p-3" placeholder="Your Name">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-300">Email</label>
+                            <input type="email" class="w-full bg-black/30 border border-gray-700 text-white text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block p-3" placeholder="name@example.com">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-300">Message</label>
+                            <textarea rows="4" class="w-full bg-black/30 border border-gray-700 text-white text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block p-3" placeholder="Leave a message..."></textarea>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium py-3 px-8 rounded-lg shadow-lg">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="glass border-t border-white/10 py-8">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <span class="text-xl font-bold text-white">Galib<span class="text-purple-500">&lt;/&gt;</span></span>
+            <div class="text-sm text-gray-500">
+                &copy; <script>document.write(new Date().getFullYear())</script> Ibrahim Ahmed Galib. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+        
+        // Close modal when clicking outside content
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>
